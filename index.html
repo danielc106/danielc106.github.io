@@ -14,8 +14,17 @@ var mapProp= {
 };
 var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
-var marker = new google.maps.Marker({position: myCenter});
 
+var marker = new google.maps.Marker({
+  position:{ lat: 55.8615253, lng: -4.2506112 },
+  icon:'heart.png'
+});
+
+var infowindow = new google.maps.InfoWindow({
+  content:"Hello World!"
+});
+
+infowindow.open(map,marker);
 marker.setMap(map);
 </script>
 
