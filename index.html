@@ -33,8 +33,14 @@
                 position: location,
                 map: map,
                 title: "Waxy O'Connor's",
-                icon: "heart.png"
             });
+
+            const infowindow = new google.maps.InfoWindow({
+            content:"Hello World!"
+            });
+
+            infowindow.open(map,marker);
+
         }
     </script>
 
