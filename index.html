@@ -29,6 +29,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .custom-heart {
+            color: red;
+            font-size: 30px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -40,7 +45,7 @@
     </div>
 
     <script>
-        var map = L.map('map').setView([55.8611, -4.2526], 15);
+        var map = L.map('map', { preferCanvas: true }).setView([55.8611, -4.2526], 15);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
@@ -49,8 +54,8 @@
         var heartIcon = L.divIcon({
             className: 'custom-heart',
             html: '&#10084;', 
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+            iconSize: [40, 40],
+            iconAnchor: [20, 20]
         });
         
         var marker = L.marker([55.8611, -4.2526], { icon: heartIcon }).addTo(map);
