@@ -68,6 +68,23 @@
             background-color: #ffcccb !important;
             color: #d60000 !important;
         }
+        .heart-date {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            font-size: 12px;
+            color: white;
+            background-color: red;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calendar-container {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -83,7 +100,14 @@
     
     <div id="calendarScreen">
         <h1>Select a Date</h1>
-        <input type="date" id="calendar" value="2024-07-27">
+        <div id="calendar" class="calendar-container">
+            <input type="date" id="calendarInput" />
+            <!-- Love hearts for specific dates -->
+            <div id="heart27Jan" class="heart-date" data-date="2024-01-27">27</div>
+            <div id="heart29May" class="heart-date" data-date="2024-05-29">29</div>
+            <div id="heart3Jul" class="heart-date" data-date="2024-07-03">3</div>
+            <div id="heart24Jul" class="heart-date" data-date="2024-07-24">24</div>
+        </div>
         <div class="back-button" onclick="closeCalendar()">Back to Map</div>
     </div>
 
@@ -110,40 +134,12 @@
             { name: "Wetherspoons Cambuslang", coords: [55.8195, -4.1730], text: "A relaxed pub in Cambuslang offering affordable food and drinks.", image: "https://example.com/wetherspoons.jpg" }
         ];
         
-        // Dates to highlight and restrict
         const validDates = ['2024-01-27', '2024-05-29', '2024-07-03', '2024-07-24'];
 
-        // Highlight valid dates and disable others
-        function highlightDates() {
-            var calendarInput = document.getElementById('calendar');
-            var calendarDate = calendarInput.value;
-
-            // Loop through each date option and disable others
-            calendarInput.setAttribute('min', '2024-01-27');
-            calendarInput.setAttribute('max', '2024-07-24');
-            calendarInput.querySelectorAll('option').forEach(function(option) {
-                const date = option.value;
-                if (!validDates.includes(date)) {
-                    option.disabled = true;
-                } else {
-                    option.disabled = false;
-                }
-            });
-
-            // Add highlighted class to valid dates
-            validDates.forEach(function(date) {
-                let dateOption = document.querySelector(`option[value="${date}"]`);
-                if (dateOption) {
-                    dateOption.classList.add('highlighted');
-                }
-            });
-        }
-        
         function loadMarkers() {
-            var selectedDate = document.getElementById('calendar').value;
+            var selectedDate = document.getElementById('calendarInput').value;
             var visibleLocations = [];
 
-            // Set visibility of locations based on selected date
             if (selectedDate === '2024-01-27') {
                 visibleLocations = ["Waxy O'Connor's Glasgow"];
             } else if (selectedDate === '2024-05-29') {
@@ -190,13 +186,19 @@
             loadMarkers();
         }
 
-        document.getElementById('calendar').addEventListener('change', function() {
+        document.getElementById('calendarInput').addEventListener('change', function() {
             loadMarkers();
         });
 
-        highlightDates();
+        // Ensure the love heart divs are only shown on valid dates
+        validDates.forEach(function(date) {
+            var heartElement = document.querySelector(`[data-date='${date}']`);
+            heartElement.style.display = 'block';
+        });
+
         loadMarkers();
     </script>
 </body>
 </html>
+
 
