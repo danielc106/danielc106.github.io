@@ -3,50 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waxy O'Connor's Glasgow</title>
+    <title>Waxy O'Connor's Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
-        /* Set the size of the map */
-        #map {
-            height: 500px;
-            width: 100%;
+        body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; }
+        #map { height: 100vh; }
+        #infoScreen {
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: white;
+            text-align: center;
+            padding: 50px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Waxy O'Connor's Glasgow Location</h1>
     <div id="map"></div>
+    <div id="infoScreen">
+        <h1>Waxy O'Connor's Glasgow</h1>
+        <p>A unique and atmospheric pub in Glasgow, known for its incredible wooden interior.</p>
+        <div class="back-button" onclick="closeInfoScreen()">Back to Map</div>
+    </div>
 
     <script>
-        // Initialize the map
-        function initMap() {
-            // The location of Waxy O'Connor's (Glasgow)
-            const location = { lat: 55.8600, lng: -4.2500 };
-
-            // Create the map
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: location,
-            });
-
-            // Create a marker at the location
-            const marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                title: "Waxy O'Connor's",
-            });
-
-            const infowindow = new google.maps.InfoWindow({
-  content:"Hello World!"
-});
-
-google.maps.event.addListener(marker, 'click', function() {
-  infowindow.open(map,marker);
-});
-
+        var map = L.map('map').setView([55.8611, -4.2526], 15);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        var heartIcon = L.divIcon({
+            className: 'custom-heart',
+            html: '&#10084;', 
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+        
+        var marker = L.marker([55.8611, -4.2526], { icon: heartIcon }).addTo(map);
+        marker.on('click', function() {
+            document.getElementById('infoScreen').style.display = 'block';
+        });
+        
+        function closeInfoScreen() {
+            document.getElementById('infoScreen').style.display = 'none';
         }
     </script>
-
-    <!-- Include Google Maps JavaScript API (replace YOUR_API_KEY with your actual key) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkmpZKkHmmZOo4zudeC_FkzJMJY73l0bA&callback=initMap" async defer></script>
 </body>
 </html>
