@@ -9,7 +9,7 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; }
         #map { height: 100vh; position: relative; }
-        #infoScreen {
+        #infoScreen, #calendarScreen {
             display: none;
             position: absolute;
             top: 0; left: 0;
@@ -40,15 +40,44 @@
             font-size: 30px;
             font-weight: bold;
         }
+        #selectDateButton {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        #calendar {
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <button id="selectDateButton" onclick="showCalendar()">Select Date</button>
+    
     <div id="infoScreen">
         <h1 id="infoTitle"></h1>
         <img id="infoImage" src="" alt="Location Image">
         <p id="infoText"></p>
         <div class="back-button" onclick="closeInfoScreen()">Back to Map</div>
+    </div>
+    
+    <div id="calendarScreen">
+        <h1>Select a Date</h1>
+        <input type="date" id="calendar">
+        <div class="back-button" onclick="closeCalendar()">Back to Map</div>
     </div>
 
     <script>
@@ -86,6 +115,18 @@
         
         function closeInfoScreen() {
             document.getElementById('infoScreen').style.display = 'none';
+        }
+        
+        function showCalendar() {
+            document.getElementById('map').style.display = 'none';
+            document.getElementById('selectDateButton').style.display = 'none';
+            document.getElementById('calendarScreen').style.display = 'block';
+        }
+        
+        function closeCalendar() {
+            document.getElementById('calendarScreen').style.display = 'none';
+            document.getElementById('map').style.display = 'block';
+            document.getElementById('selectDateButton').style.display = 'block';
         }
     </script>
 </body>
