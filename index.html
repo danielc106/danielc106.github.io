@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waxy O'Connor's Map</title>
+    <title>Love Hearts Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
@@ -39,13 +39,13 @@
 <body>
     <div id="map"></div>
     <div id="infoScreen">
-        <h1>Waxy O'Connor's Glasgow</h1>
-        <p>A unique and atmospheric pub in Glasgow, known for its incredible wooden interior.</p>
+        <h1 id="infoTitle"></h1>
+        <p id="infoText"></p>
         <div class="back-button" onclick="closeInfoScreen()">Back to Map</div>
     </div>
 
     <script>
-        var map = L.map('map', { preferCanvas: true }).setView([55.8611, -4.2526], 15);
+        var map = L.map('map', { preferCanvas: true }).setView([55.8611, -4.2526], 12);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
@@ -58,9 +58,22 @@
             iconAnchor: [20, 20]
         });
         
-        var marker = L.marker([55.8611, -4.2526], { icon: heartIcon }).addTo(map);
-        marker.on('click', function() {
-            document.getElementById('infoScreen').style.display = 'block';
+        var locations = [
+            { name: "Waxy O'Connor's Glasgow", coords: [55.8611, -4.2526], text: "A unique and atmospheric pub in Glasgow, known for its incredible wooden interior." },
+            { name: "Jungle Rumble Glasgow", coords: [55.8588, -4.2557], text: "A fun mini-golf experience with a jungle theme in the heart of Glasgow." },
+            { name: "Sugo Glasgow", coords: [55.8574, -4.2576], text: "A vibrant Italian restaurant known for its fresh pasta dishes." },
+            { name: "TeamSport Cambuslang", coords: [55.8094, -4.1522], text: "An exciting indoor go-karting track offering high-speed thrills." },
+            { name: "Starbucks Hamilton", coords: [55.7784, -4.0509], text: "A relaxing spot for coffee lovers located in Palace Grounds Road." },
+            { name: "Wetherspoons Cambuslang", coords: [55.8199, -4.1649], text: "A classic Wetherspoons pub offering affordable food and drinks." }
+        ];
+        
+        locations.forEach(location => {
+            var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
+            marker.on('click', function() {
+                document.getElementById('infoTitle').innerText = location.name;
+                document.getElementById('infoText').innerText = location.text;
+                document.getElementById('infoScreen').style.display = 'block';
+            });
         });
         
         function closeInfoScreen() {
