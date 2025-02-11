@@ -102,11 +102,45 @@
         ];
         
         function loadMarkers() {
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
+    // Get the selected date
+    var selectedDate = document.getElementById('calendar').value;
+    
+    // Define the visibility rules for each date
+    var visibleLocations = [];
+    
+    if (selectedDate === '2024-01-27') {
+        visibleLocations = ["Waxy O'Connor's Glasgow"];
+    } else if (selectedDate === '2024-05-29') {
+        visibleLocations = ["TeamSport Cambuslang", "Wetherspoons Cambuslang"];
+    } else if (selectedDate === '2024-07-03') {
+        visibleLocations = ["Starbucks Hamilton"];
+    } else if (selectedDate === '2024-07-24') {
+        visibleLocations = ["Sugo Glasgow", "Jungle Rumble Glasgow"];
+    } else {
+        // If no specific date is selected, show all markers
+        visibleLocations = locations.map(location => location.name);
+    }
+
+    // Remove existing markers
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+        }
+    });
+
+    // Loop through all locations and only add those that are visible for the selected date
+    locations.forEach(location => {
+        if (visibleLocations.includes(location.name)) {
+            var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
+            marker.on('click', function() {
+                document.getElementById('infoTitle').innerText = location.name;
+                document.getElementById('infoText').innerText = location.text;
+                document.getElementById('infoImage').src = location.image;
+                document.getElementById('infoScreen').style.display = 'block';
             });
+        }
+    });
+}
             
             locations.forEach(location => {
                 var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
