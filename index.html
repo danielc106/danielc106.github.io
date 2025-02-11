@@ -61,6 +61,9 @@
             width: 300px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        #calendar:focus {
+            outline: 2px solid #007BFF;
+        }
     </style>
 </head>
 <body>
@@ -76,7 +79,7 @@
     
     <div id="calendarScreen">
         <h1>Select a Date</h1>
-        <input type="date" id="calendar">
+        <input type="date" id="calendar" value="2024-07-27">
         <div class="back-button" onclick="closeCalendar()">Back to Map</div>
     </div>
 
@@ -95,23 +98,28 @@
         });
         
         var locations = [
-            { name: "Waxy O'Connor's Glasgow", coords: [55.8611, -4.2526], text: "A unique and atmospheric pub in Glasgow, known for its incredible wooden interior.", image: "https://example.com/waxy.jpg" },
-            { name: "Jungle Rumble Glasgow", coords: [55.8588, -4.2557], text: "A fun mini-golf experience with a jungle theme in the heart of Glasgow.", image: "https://example.com/jungle-rumble.jpg" },
-            { name: "Sugo Glasgow", coords: [55.8574, -4.2576], text: "A vibrant Italian restaurant known for its fresh pasta dishes.", image: "https://example.com/sugo.jpg" },
-            { name: "TeamSport Cambuslang", coords: [55.8094, -4.1522], text: "An exciting indoor go-karting track offering high-speed thrills.", image: "https://example.com/teamsport.jpg" },
-            { name: "Starbucks Hamilton", coords: [55.7784, -4.0509], text: "A relaxing spot for coffee lovers located in Palace Grounds Road.", image: "https://example.com/starbucks.jpg" },
-            { name: "Wetherspoons Cambuslang", coords: [55.8199, -4.1649], text: "A classic Wetherspoons pub offering affordable food and drinks.", image: "https://example.com/wetherspoons.jpg" }
+            { name: "Waxy O'Connor's Glasgow", coords: [55.8611, -4.2526], text: "A unique and atmospheric pub in Glasgow, known for its incredible wooden interior.", image: "https://example.com/waxy.jpg" }
         ];
         
-        locations.forEach(location => {
-            var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
-            marker.on('click', function() {
-                document.getElementById('infoTitle').innerText = location.name;
-                document.getElementById('infoText').innerText = location.text;
-                document.getElementById('infoImage').src = location.image;
-                document.getElementById('infoScreen').style.display = 'block';
+        function loadMarkers() {
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
             });
-        });
+            
+            locations.forEach(location => {
+                var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
+                marker.on('click', function() {
+                    document.getElementById('infoTitle').innerText = location.name;
+                    document.getElementById('infoText').innerText = location.text;
+                    document.getElementById('infoImage').src = location.image;
+                    document.getElementById('infoScreen').style.display = 'block';
+                });
+            });
+        }
+        
+        loadMarkers();
         
         function closeInfoScreen() {
             document.getElementById('infoScreen').style.display = 'none';
@@ -127,7 +135,14 @@
             document.getElementById('calendarScreen').style.display = 'none';
             document.getElementById('map').style.display = 'block';
             document.getElementById('selectDateButton').style.display = 'block';
+            loadMarkers();
         }
+
+        document.getElementById('calendar').addEventListener('change', function() {
+            if (this.value === '2024-07-27') {
+                closeCalendar();
+            }
+        });
     </script>
 </body>
 </html>
