@@ -141,17 +141,6 @@
         }
     });
 }
-            
-            locations.forEach(location => {
-                var marker = L.marker(location.coords, { icon: heartIcon }).addTo(map);
-                marker.on('click', function() {
-                    document.getElementById('infoTitle').innerText = location.name;
-                    document.getElementById('infoText').innerText = location.text;
-                    document.getElementById('infoImage').src = location.image;
-                    document.getElementById('infoScreen').style.display = 'block';
-                });
-            });
-        }
         
         loadMarkers();
         
