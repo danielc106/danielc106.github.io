@@ -56,10 +56,12 @@
         var marker = L.marker([55.8611, -4.2526], { icon: heartIcon }).addTo(map);
         marker.on('click', function() {
             document.getElementById('infoScreen').style.display = 'block';
+            document.getElementById('map').style.display = 'none';
         });
         
         function closeInfoScreen() {
             document.getElementById('infoScreen').style.display = 'none';
+            document.getElementById('map').style.display = 'block';
         }
     </script>
 </body>
