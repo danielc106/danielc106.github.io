@@ -64,12 +64,38 @@
       background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
       box-shadow: 0 4px 16px rgba(99,102,241,0.18);
     }
-    .about-photo {
-      max-width: 180px;
-      border-radius: 50%;
-      display: block;
+    .about-photo-flip {
+      width: 180px;
+      height: 180px;
+      perspective: 800px;
       margin-bottom: 1rem;
+      display: block;
+    }
+    .about-photo-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .about-photo-flip:hover .about-photo-flip-inner {
+      transform: rotateY(180deg);
+    }
+    .about-photo-front, .about-photo-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 50%;
       box-shadow: 0 4px 24px rgba(99,102,241,0.10);
+      object-fit: cover;
+    }
+    .about-photo-front {
+      z-index: 2;
+    }
+    .about-photo-back {
+      transform: rotateY(180deg);
+      z-index: 1;
     }
     footer {
       background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
@@ -90,8 +116,13 @@
   </header>
   <section>
   <h2>About Me</h2>
-  <img src="daniel.jpg" alt="Daniel Carlin" class="about-photo">
-  <p>I am 23 year old developer from Glasgow, Scotland. My interests include football, Formula 1, and the gym!</p>
+  <div class="about-photo-flip">
+    <div class="about-photo-flip-inner">
+      <img src="daniel.jpg" alt="Daniel Carlin eating a waffle" class="about-photo-front">
+      <img src="daniel-after.jpg" alt="Daniel Carlin after eating a waffle" class="about-photo-back">
+    </div>
+  </div>
+  <p>Hello! I am Daniel, a 23 year old developer from Glasgow, Scotland. My interests include football, Formula 1, and the gym! I am a massive Celtic fan!</p>
   </section>
   <section>
     <h2>Projects</h2>
