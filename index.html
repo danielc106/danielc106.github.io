@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+  Portfolio Website for Daniel Carlin
+  Features:
+    - Modern responsive design
+    - About Me section with photo flip effect
+    - Projects section
+    - Contact section
+    - Mobile friendly layout
+-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* About Me section layout: image left, text right */
+    .about-me-flex {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .about-me-flex .about-photo-flip {
+      flex: 0 0 auto;
+    }
+    .about-me-flex .about-me-text {
+      flex: 1 1 220px;
+      min-width: 180px;
+    }
+    @media (max-width: 700px) {
+      .about-me-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .about-me-flex .about-me-text {
+        min-width: 0;
+      }
+    }
+    /*
+      Main body styles: font, background, color
+    */
     body {
       font-family: 'Montserrat', Arial, sans-serif;
       margin: 0;
@@ -13,6 +49,9 @@
       background: linear-gradient(120deg, #f0f4f8 0%, #e0e7ff 100%);
       color: #222;
     }
+    /*
+      Header styles: gradient background, rounded corners, shadow
+    */
     header {
       background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
       color: #fff;
@@ -22,21 +61,33 @@
       border-bottom-left-radius: 24px;
       border-bottom-right-radius: 24px;
     }
+    /*
+      Section styles: padding, max width, center alignment
+    */
     section {
       padding: 2rem;
       max-width: 900px;
       margin: 0 auto;
       box-sizing: border-box;
     }
+    /*
+      Heading styles: bold, spacing
+    */
     h1, h2, h3 {
       font-weight: 700;
       letter-spacing: 1px;
     }
+    /*
+      Projects grid: responsive columns and gap
+    */
     .projects {
       display: grid;
       gap: 2rem;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
+    /*
+      Project card: rounded, shadow, hover effect
+    */
     .project {
       border-radius: 16px;
       padding: 1.5rem;
@@ -48,6 +99,9 @@
       transform: translateY(-4px) scale(1.03);
       box-shadow: 0 8px 32px rgba(99,102,241,0.18);
     }
+    /*
+      Project button: gradient, rounded, hover effect
+    */
     .project a {
       display: inline-block;
       margin-top: 1rem;
@@ -65,6 +119,9 @@
       background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
       box-shadow: 0 4px 16px rgba(99,102,241,0.18);
     }
+    /*
+      About photo flip container: responsive, perspective for 3D effect
+    */
     .about-photo-flip {
       width: 100%;
       max-width: 220px;
@@ -74,6 +131,9 @@
       margin-bottom: 1rem;
       display: block;
     }
+    /*
+      Inner flip element: handles 3D rotation
+    */
     .about-photo-flip-inner {
       position: relative;
       width: 100%;
@@ -85,6 +145,9 @@
     .about-photo-flip:hover .about-photo-flip-inner {
       transform: rotateY(180deg);
     }
+    /*
+      Front and back images for flip effect
+    */
     .about-photo-front, .about-photo-back {
       position: absolute;
       top: 0;
@@ -98,13 +161,22 @@
       max-width: 100%;
       max-height: 100%;
     }
+    /*
+      Front image (default)
+    */
     .about-photo-front {
       z-index: 2;
     }
+    /*
+      Back image (on hover)
+    */
     .about-photo-back {
       transform: rotateY(180deg);
       z-index: 1;
     }
+    /*
+      Footer styles: gradient, rounded, shadow
+    */
     footer {
       background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
       color: #fff;
@@ -116,6 +188,9 @@
       box-shadow: 0 -4px 16px rgba(99,102,241,0.10);
     }
 
+    /*
+      Mobile styles: adjust padding, font size, grid, etc.
+    */
     @media (max-width: 600px) {
       header {
         padding: 1.2rem 0.5rem 1rem 0.5rem;
@@ -160,20 +235,28 @@
   </style>
 </head>
 <body>
+  <!-- Header: Name and intro -->
   <header>
     <h1>Daniel Carlin</h1>
     <p>Software Developer | Welcome to my portfolio!</p>
   </header>
+  <!-- About Me section with photo flip effect -->
   <section>
-  <h2>About Me</h2>
-  <div class="about-photo-flip">
-    <div class="about-photo-flip-inner">
-      <img src="daniel.jpg" alt="Daniel Carlin eating a waffle" class="about-photo-front">
-      <img src="daniel-after.jpg" alt="Daniel Carlin after eating a waffle" class="about-photo-back">
+    <h2>About Me</h2>
+    <div class="about-me-flex">
+      <!-- Photo flip: shows two images, flips on hover -->
+      <div class="about-photo-flip">
+        <div class="about-photo-flip-inner">
+          <img src="daniel.jpg" alt="Daniel Carlin eating a waffle" class="about-photo-front">
+          <img src="daniel-after.jpg" alt="Daniel Carlin after eating a waffle" class="about-photo-back">
+        </div>
+      </div>
+      <div class="about-me-text">
+        <p>Hello! My name is Daniel.<br><br> I am a 23 year old developer from Glasgow, Scotland.<br><br> I am a graduate of The University of Strathclyde, where I gained a First Class Honours in Mathematics and Computer Science.<br><br> My interests include football, Formula 1, and the gym! I am a massive Celtic fan! <br><br>I also love waffles, as you can probably see!</p>
+      </div>
     </div>
-  </div>
-  <p>Hello! I am Daniel, a 23 year old developer from Glasgow, Scotland. My interests include football, Formula 1, and the gym! I am a massive Celtic fan!</p>
   </section>
+  <!-- Projects section: list your software projects -->
   <section>
     <h2>Projects</h2>
     <div class="projects">
@@ -190,10 +273,12 @@
       <!-- Add more projects as needed -->
     </div>
   </section>
+  <!-- Contact section -->
   <section>
     <h2>Contact</h2>
     <p>Email: danieljamescarlin@gmail.com</p>
   </section>
+  <!-- Footer -->
   <footer>
     &copy; 2025 Daniel Carlin
   </footer>
