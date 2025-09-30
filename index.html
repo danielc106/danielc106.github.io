@@ -26,6 +26,7 @@
       padding: 2rem;
       max-width: 900px;
       margin: 0 auto;
+      box-sizing: border-box;
     }
     h1, h2, h3 {
       font-weight: 700;
@@ -65,8 +66,10 @@
       box-shadow: 0 4px 16px rgba(99,102,241,0.18);
     }
     .about-photo-flip {
-      width: 180px;
-      height: 180px;
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      aspect-ratio: 220/280;
       perspective: 800px;
       margin-bottom: 1rem;
       display: block;
@@ -74,7 +77,8 @@
     .about-photo-flip-inner {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: 0;
+      padding-bottom: 127%; /* 280/220 ratio */
       transition: transform 0.6s;
       transform-style: preserve-3d;
     }
@@ -83,12 +87,16 @@
     }
     .about-photo-front, .about-photo-back {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      border-radius: 50%;
+      border-radius: 16px;
       box-shadow: 0 4px 24px rgba(99,102,241,0.10);
       object-fit: cover;
+      max-width: 100%;
+      max-height: 100%;
     }
     .about-photo-front {
       z-index: 2;
@@ -106,6 +114,48 @@
       border-top-right-radius: 24px;
       margin-top: 2rem;
       box-shadow: 0 -4px 16px rgba(99,102,241,0.10);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        font-size: 1rem;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
+      section {
+        padding: 1rem;
+        max-width: 100%;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+      }
+      .projects {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .project {
+        padding: 1rem;
+      }
+      .about-photo-flip {
+        max-width: 100%;
+        margin-bottom: 0.7rem;
+      }
+      .about-photo-flip-inner {
+        padding-bottom: 127%;
+      }
+      footer {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
     }
   </style>
 </head>
